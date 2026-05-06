@@ -1,0 +1,648 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7E79175B2FABEF52001D81ED /* EcoPayNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 7E79175A2FABEF52001D81ED /* EcoPayNetworking */; };
+		7E79175D2FABEF61001D81ED /* EcoPayAuthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7E79175C2FABEF61001D81ED /* EcoPayAuthKit */; };
+		7E79175F2FABEF6B001D81ED /* EcoPayPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 7E79175E2FABEF6B001D81ED /* EcoPayPayments */; };
+		7E7917612FABEF78001D81ED /* EcoPayAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7E7917602FABEF78001D81ED /* EcoPayAnalytics */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7E79170E2FABA5E8001D81ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E7916F82FABA5E6001D81ED /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E7916FF2FABA5E6001D81ED;
+			remoteInfo = EcoPay;
+		};
+		7E7917182FABA5E8001D81ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E7916F82FABA5E6001D81ED /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7E7916FF2FABA5E6001D81ED;
+			remoteInfo = EcoPay;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		7E7917002FABA5E6001D81ED /* EcoPay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EcoPay.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E79170D2FABA5E8001D81ED /* EcoPayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EcoPayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7E7917172FABA5E8001D81ED /* EcoPayUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EcoPayUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		7E7917022FABA5E6001D81ED /* EcoPay */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EcoPay;
+			sourceTree = "<group>";
+		};
+		7E7917102FABA5E8001D81ED /* EcoPayTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EcoPayTests;
+			sourceTree = "<group>";
+		};
+		7E79171A2FABA5E8001D81ED /* EcoPayUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = EcoPayUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7E7916FD2FABA5E6001D81ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E7917612FABEF78001D81ED /* EcoPayAnalytics in Frameworks */,
+				7E79175D2FABEF61001D81ED /* EcoPayAuthKit in Frameworks */,
+				7E79175F2FABEF6B001D81ED /* EcoPayPayments in Frameworks */,
+				7E79175B2FABEF52001D81ED /* EcoPayNetworking in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E79170A2FABA5E8001D81ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E7917142FABA5E8001D81ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7E7916F72FABA5E6001D81ED = {
+			isa = PBXGroup;
+			children = (
+				7E7917022FABA5E6001D81ED /* EcoPay */,
+				7E7917102FABA5E8001D81ED /* EcoPayTests */,
+				7E79171A2FABA5E8001D81ED /* EcoPayUITests */,
+				7E7917592FABEEF4001D81ED /* Frameworks */,
+				7E7917012FABA5E6001D81ED /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7E7917012FABA5E6001D81ED /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7E7917002FABA5E6001D81ED /* EcoPay.app */,
+				7E79170D2FABA5E8001D81ED /* EcoPayTests.xctest */,
+				7E7917172FABA5E8001D81ED /* EcoPayUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7E7917592FABEEF4001D81ED /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7E7916FF2FABA5E6001D81ED /* EcoPay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E7917212FABA5E8001D81ED /* Build configuration list for PBXNativeTarget "EcoPay" */;
+			buildPhases = (
+				7E7916FC2FABA5E6001D81ED /* Sources */,
+				7E7916FD2FABA5E6001D81ED /* Frameworks */,
+				7E7916FE2FABA5E6001D81ED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				7E7917022FABA5E6001D81ED /* EcoPay */,
+			);
+			name = EcoPay;
+			packageProductDependencies = (
+				7E79175A2FABEF52001D81ED /* EcoPayNetworking */,
+				7E79175C2FABEF61001D81ED /* EcoPayAuthKit */,
+				7E79175E2FABEF6B001D81ED /* EcoPayPayments */,
+				7E7917602FABEF78001D81ED /* EcoPayAnalytics */,
+			);
+			productName = EcoPay;
+			productReference = 7E7917002FABA5E6001D81ED /* EcoPay.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7E79170C2FABA5E8001D81ED /* EcoPayTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E7917242FABA5E8001D81ED /* Build configuration list for PBXNativeTarget "EcoPayTests" */;
+			buildPhases = (
+				7E7917092FABA5E8001D81ED /* Sources */,
+				7E79170A2FABA5E8001D81ED /* Frameworks */,
+				7E79170B2FABA5E8001D81ED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7E79170F2FABA5E8001D81ED /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7E7917102FABA5E8001D81ED /* EcoPayTests */,
+			);
+			name = EcoPayTests;
+			packageProductDependencies = (
+			);
+			productName = EcoPayTests;
+			productReference = 7E79170D2FABA5E8001D81ED /* EcoPayTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		7E7917162FABA5E8001D81ED /* EcoPayUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7E7917272FABA5E8001D81ED /* Build configuration list for PBXNativeTarget "EcoPayUITests" */;
+			buildPhases = (
+				7E7917132FABA5E8001D81ED /* Sources */,
+				7E7917142FABA5E8001D81ED /* Frameworks */,
+				7E7917152FABA5E8001D81ED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7E7917192FABA5E8001D81ED /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				7E79171A2FABA5E8001D81ED /* EcoPayUITests */,
+			);
+			name = EcoPayUITests;
+			packageProductDependencies = (
+			);
+			productName = EcoPayUITests;
+			productReference = 7E7917172FABA5E8001D81ED /* EcoPayUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7E7916F82FABA5E6001D81ED /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2620;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					7E7916FF2FABA5E6001D81ED = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					7E79170C2FABA5E8001D81ED = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 7E7916FF2FABA5E6001D81ED;
+					};
+					7E7917162FABA5E8001D81ED = {
+						CreatedOnToolsVersion = 26.2;
+						TestTargetID = 7E7916FF2FABA5E6001D81ED;
+					};
+				};
+			};
+			buildConfigurationList = 7E7916FB2FABA5E6001D81ED /* Build configuration list for PBXProject "EcoPay" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7E7916F72FABA5E6001D81ED;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7E7917322FABA948001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayNetworking" */,
+				7E7917332FABACD6001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayAuthKit" */,
+				7E7917342FABB04A001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayPayments" */,
+				7E7917352FABB165001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayAnalytics" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 7E7917012FABA5E6001D81ED /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7E7916FF2FABA5E6001D81ED /* EcoPay */,
+				7E79170C2FABA5E8001D81ED /* EcoPayTests */,
+				7E7917162FABA5E8001D81ED /* EcoPayUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7E7916FE2FABA5E6001D81ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E79170B2FABA5E8001D81ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E7917152FABA5E8001D81ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7E7916FC2FABA5E6001D81ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E7917092FABA5E8001D81ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E7917132FABA5E8001D81ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7E79170F2FABA5E8001D81ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E7916FF2FABA5E6001D81ED /* EcoPay */;
+			targetProxy = 7E79170E2FABA5E8001D81ED /* PBXContainerItemProxy */;
+		};
+		7E7917192FABA5E8001D81ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7E7916FF2FABA5E6001D81ED /* EcoPay */;
+			targetProxy = 7E7917182FABA5E8001D81ED /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		7E79171F2FABA5E8001D81ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7E7917202FABA5E8001D81ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7E7917222FABA5E8001D81ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4ZPYD95GJT;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pratik.EcoPay;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7E7917232FABA5E8001D81ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 4ZPYD95GJT;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pratik.EcoPay;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		7E7917252FABA5E8001D81ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pratik.EcoPayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EcoPay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EcoPay";
+			};
+			name = Debug;
+		};
+		7E7917262FABA5E8001D81ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pratik.EcoPayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EcoPay.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/EcoPay";
+			};
+			name = Release;
+		};
+		7E7917282FABA5E8001D81ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pratik.EcoPayUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = EcoPay;
+			};
+			name = Debug;
+		};
+		7E7917292FABA5E8001D81ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.pratik.EcoPayUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = EcoPay;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7E7916FB2FABA5E6001D81ED /* Build configuration list for PBXProject "EcoPay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E79171F2FABA5E8001D81ED /* Debug */,
+				7E7917202FABA5E8001D81ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E7917212FABA5E8001D81ED /* Build configuration list for PBXNativeTarget "EcoPay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E7917222FABA5E8001D81ED /* Debug */,
+				7E7917232FABA5E8001D81ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E7917242FABA5E8001D81ED /* Build configuration list for PBXNativeTarget "EcoPayTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E7917252FABA5E8001D81ED /* Debug */,
+				7E7917262FABA5E8001D81ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7E7917272FABA5E8001D81ED /* Build configuration list for PBXNativeTarget "EcoPayUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7E7917282FABA5E8001D81ED /* Debug */,
+				7E7917292FABA5E8001D81ED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		7E7917322FABA948001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayNetworking" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/EcoPayNetworking;
+		};
+		7E7917332FABACD6001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayAuthKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/EcoPayAuthKit;
+		};
+		7E7917342FABB04A001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayPayments" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/EcoPayPayments;
+		};
+		7E7917352FABB165001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayAnalytics" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/EcoPayAnalytics;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7E79175A2FABEF52001D81ED /* EcoPayNetworking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E7917322FABA948001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayNetworking" */;
+			productName = EcoPayNetworking;
+		};
+		7E79175C2FABEF61001D81ED /* EcoPayAuthKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E7917332FABACD6001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayAuthKit" */;
+			productName = EcoPayAuthKit;
+		};
+		7E79175E2FABEF6B001D81ED /* EcoPayPayments */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E7917342FABB04A001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayPayments" */;
+			productName = EcoPayPayments;
+		};
+		7E7917602FABEF78001D81ED /* EcoPayAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E7917352FABB165001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayAnalytics" */;
+			productName = EcoPayAnalytics;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 7E7916F82FABA5E6001D81ED /* Project object */;
+}
