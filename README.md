@@ -1,18 +1,4 @@
-# Eco-Pay – Modular Wallet App
 
-Eco-Pay is an iOS wallet application prototype built with Swift, Swift Package Manager, Keychain, REST APIs, and async/await. The project demonstrates a modular mobile architecture for digital wallet features such as authentication, secure credential storage, payment workflows, and transaction-related service layers.
-
-This project was created as a portfolio-level iOS application to demonstrate clean architecture, secure mobile development practices, modular code organization, and API-driven feature design.
-
----
-
-## Overview
-
-Eco-Pay focuses on building a maintainable and scalable wallet architecture by separating major app responsibilities into independent modules. Instead of keeping all business logic inside one large app target, the project uses a modular structure so features like authentication, payments, analytics, and networking can be developed and maintained separately.
-
-The app is designed around real-world mobile wallet concepts such as secure login, API communication, credential protection, and reusable service layers.
-
----
 
 ## Key Features
 
