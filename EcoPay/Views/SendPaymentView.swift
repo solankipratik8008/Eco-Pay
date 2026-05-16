@@ -68,8 +68,7 @@ struct SendPaymentView: View {
                 }
                 Button("Cancel", role: .cancel) {}
             } message: {
-                Text("Send \(viewModel.formattedAmount) to \(viewModel.recipientName)?")
-            }
+                Text("Send \(viewModel.formattedAmount) to \(viewModel.recipientName)?")            }
             .onAppear {
                 viewModel.onPaymentCompleted = onPaymentCompleted
             }
@@ -149,12 +148,12 @@ private extension SendPaymentView {
         VStack(spacing: AppTheme.Spacing.md) {
             // Recipient field
             AppTextField(
-                placeholder: "Recipient name",
-                icon: "person.fill",
+                placeholder: "Recipient email",
+                icon: "envelope.fill",
                 text: $viewModel.recipientName,
                 hasError: viewModel.errorField == .recipient,
-                textContentType: .name,
-                autocapitalization: .words
+                textContentType: .emailAddress,
+                autocapitalization: .never
             )
             
             // Note field
@@ -234,7 +233,7 @@ private extension SendPaymentView {
             
             // Recipient
             VStack(spacing: AppTheme.Spacing.xxs) {
-                Text("Sent to")
+                Text("Sent to email")
                     .font(AppTheme.Typography.subheadline)
                     .foregroundStyle(.secondary)
                 

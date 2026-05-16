@@ -52,6 +52,51 @@ final class FirestoreWalletService {
         for userId: String,
         limit: Int = 5
     ) async throws -> [EcoPayPayments.Transaction] {
-        return []
+        let snapshot = try await db
+            .collection(Collection.transactions)
+            .whereField("userId", isEqualTo: userId)
+            .getDocuments()
+        
+        let transactions: [EcoPayPayments.Transaction] = snapshot.documents.compactMap { document in
+            let data = document.data()
+            
+            let amountDouble = data["amount"] as? Double ?? 0.0
+            let amount = Decimal(amountDouble)
+            
+            let currency = data["currency"] as? String ?? "CAD"
+            let typeRaw = data["type"] as? String ?? TransactionType.sent.rawValue
+            let statusRaw = data["status"] as? String ?? TransactionStatus.completed.rawValue
+            let categoryRaw = data["category"] as? String ?? TransactionCategory.transfer.rawValue
+            
+            let description = data["description"] as? String ?? "Transfer"
+            let recipient = data["recipient"] as? String ?? "EcoPay User"
+            let note = data["note"] as? String
+            let referenceNumber = data["referenceNumber"] as? String
+            let cardLastFour = data["cardLastFour"] as? String
+            
+            let timestamp = data["createdAt"] as? Timestamp
+            let date = timestamp?.dateValue() ?? Date()
+            
+            return EcoPayPayments.Transaction(
+                id: document.documentID,
+                type: TransactionType(rawValue: typeRaw) ?? .sent,
+                status: TransactionStatus(rawValue: statusRaw) ?? .completed,
+                amount: amount,
+                currency: currency,
+                description: description,
+                recipient: recipient,
+                date: date,
+                category: TransactionCategory(rawValue: categoryRaw) ?? .transfer,
+                note: note?.isEmpty == true ? nil : note,
+                referenceNumber: referenceNumber,
+                cardLastFour: cardLastFour
+            )
+        }
+        
+        return Array(
+            transactions
+                .sorted { $0.date > $1.date }
+                .prefix(limit)
+        )
     }
 }

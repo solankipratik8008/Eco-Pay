@@ -39,6 +39,7 @@ final class SendPaymentViewModel: ObservableObject {
     
     private let paymentService: PaymentServiceProtocol
     private let analyticsService: AnalyticsServiceProtocol
+    private let firestoreTransferService = FirestoreTransferService()
     private weak var appViewModel: AppViewModel?
     
     /// Callback when payment completes — notifies WalletViewModel
@@ -108,7 +109,12 @@ final class SendPaymentViewModel: ObservableObject {
         let trimmedRecipient = recipientName
             .trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedRecipient.isEmpty else {
-            showFieldError(.recipient, message: "Please enter a recipient name.")
+            showFieldError(.recipient, message: "Please enter the recipient email.")
+            return
+        }
+        
+        guard trimmedRecipient.contains("@") else {
+            showFieldError(.recipient, message: "Please enter a valid recipient email.")
             return
         }
         
@@ -142,45 +148,48 @@ final class SendPaymentViewModel: ObservableObject {
     func sendPayment() async {
         guard let amount else { return }
         
+        guard let currentUser = appViewModel?.currentUser else {
+            paymentState = .failed("User session not found. Please log in again.")
+            errorMessage = "User session not found. Please log in again."
+            return
+        }
+        
         paymentState = .processing
         showConfirmation = false
         
-        let request = SendPaymentRequest(
-            recipientName: recipientName.trimmingCharacters(in: .whitespacesAndNewlines),
-            amount: amount,
-            note: note.nilIfEmpty
-        )
+        let recipientEmail = recipientName
+            .trimmingCharacters(in: .whitespacesAndNewlines)
         
         do {
-            let transaction = try await paymentService.sendPayment(request: request)
+            let transaction = try await firestoreTransferService.sendMoney(
+                senderId: currentUser.userId,
+                senderEmail: currentUser.email,
+                recipientEmail: recipientEmail,
+                amount: amount,
+                note: note.nilIfEmpty
+            )
+            
             paymentState = .success(transaction)
             
             analyticsService.track(
                 .paymentCompleted(
                     amount: formattedAmount,
-                    recipient: recipientName
+                    recipient: recipientEmail
                 )
             )
             
-            // Notify dashboard to update
+            // Notify dashboard to update balance and recent transaction list.
             onPaymentCompleted?(transaction)
             
-        } catch let error as PaymentError {
-            if error.requiresReLogin {
-                if let appViewModel {
-                    await appViewModel.handleAuthError(.sessionExpired)
-                }
-            } else {
-                paymentState = .failed(error.localizedDescription)
-                errorMessage = error.localizedDescription
-                
-                analyticsService.track(
-                    .paymentFailed(reason: error.localizedDescription)
-                )
-            }
         } catch {
-            paymentState = .failed(error.localizedDescription)
-            errorMessage = error.localizedDescription
+            let message = error.localizedDescription
+            
+            paymentState = .failed(message)
+            errorMessage = message
+            
+            analyticsService.track(
+                .paymentFailed(reason: message)
+            )
         }
     }
     
