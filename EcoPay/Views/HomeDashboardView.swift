@@ -71,10 +71,11 @@ struct HomeDashboardView: View {
             .task {
                 await viewModel.loadDashboardData()
             }
-            .sheet(isPresented: $showAddCard) {
-                AddCardView(
-                    onCardAdded: { card in
-                        viewModel.onCardAdded(card)
+            .sheet(isPresented: $showSendPayment) {
+                SendPaymentView(
+                    appViewModel: appViewModel,
+                    onPaymentCompleted: { transaction in
+                        viewModel.onPaymentCompleted(transaction)
                         
                         Task {
                             await viewModel.refresh()
@@ -87,6 +88,10 @@ struct HomeDashboardView: View {
                 AddCardView(
                     onCardAdded: { card in
                         viewModel.onCardAdded(card)
+                        
+                        Task {
+                            await viewModel.refresh()
+                        }
                     }
                 )
                 .environmentObject(appViewModel)
