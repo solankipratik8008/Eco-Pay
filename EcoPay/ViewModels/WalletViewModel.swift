@@ -179,6 +179,8 @@ final class WalletViewModel: ObservableObject {
         
         do {
             let wallet = try await firestoreWalletService.fetchWallet(for: userId)
+            print("Firestore wallet cards count: \(wallet.cards.count)")
+            print("Default card: \(wallet.cards.first?.lastFour ?? "No card")")
             walletState = .loaded(wallet)
             
             analyticsService.track(

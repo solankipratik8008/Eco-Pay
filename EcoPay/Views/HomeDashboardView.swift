@@ -71,11 +71,14 @@ struct HomeDashboardView: View {
             .task {
                 await viewModel.loadDashboardData()
             }
-            .sheet(isPresented: $showSendPayment) {
-                SendPaymentView(
-                    appViewModel: appViewModel,
-                    onPaymentCompleted: { transaction in
-                        viewModel.onPaymentCompleted(transaction)
+            .sheet(isPresented: $showAddCard) {
+                AddCardView(
+                    onCardAdded: { card in
+                        viewModel.onCardAdded(card)
+                        
+                        Task {
+                            await viewModel.refresh()
+                        }
                     }
                 )
                 .environmentObject(appViewModel)
@@ -118,7 +121,9 @@ private extension HomeDashboardView {
             } else {
                 BalanceCardView(
                     balance: viewModel.formattedBalance,
-                    card: viewModel.defaultCard
+                    card: viewModel.defaultCard,
+                    cards: viewModel.cards,
+                    currencyCode: "CAD"
                 )
             }
         }

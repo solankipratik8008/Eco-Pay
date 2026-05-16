@@ -37,10 +37,13 @@ final class FirestoreWalletService {
         let balanceDouble = data["balance"] as? Double ?? 0.0
         let currency = data["currency"] as? String ?? "CAD"
         
+        let cards = try await FirestoreCardService().fetchCards(userId: userId)
+
+
         return WalletResponse(
             balance: Decimal(balanceDouble),
             currency: currency,
-            cards: []
+            cards: cards
         )
     }
     

@@ -12,9 +12,17 @@
 // Captures cardholder name, last 4 digits, expiry,
 // and brand. Only stores demo data — no real card numbers.
 
+//
+//  AddCardView.swift
+//  EcoPay
+//
+//  Created by Pratik Solanki on 2026-05-06.
+//
+
 import SwiftUI
 import EcoPayPayments
 import EcoPayAnalytics
+import EcoPayAuthKit
 
 // MARK: - Add Card View
 
@@ -37,6 +45,10 @@ struct AddCardView: View {
     @State private var errorMessage: String?
     @State private var showSuccess: Bool = false
     
+    // MARK: - Services
+    
+    private let firestoreCardService = FirestoreCardService()
+    
     // MARK: - Callback
     
     var onCardAdded: ((Card) -> Void)?
@@ -46,7 +58,9 @@ struct AddCardView: View {
     private var isFormValid: Bool {
         let hasName = !cardholderName
             .trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        let hasDigits = lastFour.count == 4 && lastFour.allSatisfy({ $0.isNumber })
+        
+        let hasDigits = lastFour.count == 4 && lastFour.allSatisfy { $0.isNumber }
+        
         return hasName && hasDigits && !isLoading
     }
     
@@ -82,24 +96,19 @@ struct AddCardView: View {
 // MARK: - Form View
 
 private extension AddCardView {
+    
     var formView: some View {
         ScrollView {
             VStack(spacing: AppTheme.Spacing.lg) {
-                // Card preview
                 cardPreview
-                
-                // Form fields
                 formFields
                 
-                // Error message
                 if let error = errorMessage {
                     errorBanner(error)
                 }
                 
-                // Demo notice
                 demoNotice
                 
-                // Add button
                 PrimaryButton(
                     title: "Add Card",
                     icon: AppConstants.Icons.addCard,
@@ -146,14 +155,10 @@ private extension AddCardView {
                         .font(.system(size: 9, weight: .medium))
                         .foregroundStyle(.white.opacity(0.5))
                     
-                    Text(
-                        cardholderName.isEmpty
-                            ? "YOUR NAME"
-                            : cardholderName.uppercased()
-                    )
-                    .font(.system(size: 13, weight: .medium))
-                    .foregroundStyle(.white.opacity(0.9))
-                    .lineLimit(1)
+                    Text(cardholderName.isEmpty ? "YOUR NAME" : cardholderName.uppercased())
+                        .font(.system(size: 13, weight: .medium))
+                        .foregroundStyle(.white.opacity(0.9))
+                        .lineLimit(1)
                 }
                 
                 Spacer()
@@ -189,7 +194,6 @@ private extension AddCardView {
     
     var formFields: some View {
         VStack(spacing: AppTheme.Spacing.md) {
-            // Cardholder name
             AppTextField(
                 placeholder: "Cardholder name",
                 icon: "person.fill",
@@ -198,7 +202,6 @@ private extension AddCardView {
                 autocapitalization: .words
             )
             
-            // Last 4 digits
             AppTextField(
                 placeholder: "Last 4 digits",
                 icon: "creditcard.fill",
@@ -206,34 +209,23 @@ private extension AddCardView {
                 keyboardType: .numberPad
             )
             .onChange(of: lastFour) { _, newValue in
-                // Limit to 4 digits only
                 let filtered = newValue.filter { $0.isNumber }
-                if filtered.count > 4 {
-                    lastFour = String(filtered.prefix(4))
-                } else {
-                    lastFour = filtered
-                }
+                lastFour = String(filtered.prefix(4))
             }
             
-            // Card brand picker
             VStack(alignment: .leading, spacing: AppTheme.Spacing.xs) {
                 Text("Card Brand")
                     .font(AppTheme.Typography.caption)
                     .foregroundStyle(.secondary)
                 
                 HStack(spacing: AppTheme.Spacing.xs) {
-                    ForEach(
-                        [CardBrand.visa, .mastercard, .amex, .discover],
-                        id: \.self
-                    ) { brand in
+                    ForEach([CardBrand.visa, .mastercard, .amex, .discover], id: \.self) { brand in
                         brandButton(brand)
                     }
                 }
             }
             
-            // Expiry pickers
             HStack(spacing: AppTheme.Spacing.md) {
-                // Month picker
                 VStack(alignment: .leading, spacing: AppTheme.Spacing.xs) {
                     Text("Month")
                         .font(AppTheme.Typography.caption)
@@ -251,7 +243,6 @@ private extension AddCardView {
                     .cornerRadius(AppTheme.CornerRadius.medium)
                 }
                 
-                // Year picker
                 VStack(alignment: .leading, spacing: AppTheme.Spacing.xs) {
                     Text("Year")
                         .font(AppTheme.Typography.caption)
@@ -273,11 +264,11 @@ private extension AddCardView {
     }
     
     func brandButton(_ brand: CardBrand) -> some View {
-        Button(action: {
+        Button {
             withAnimation(AppTheme.Animation.quick) {
                 selectedBrand = brand
             }
-        }) {
+        } label: {
             Text(brand.rawValue)
                 .font(.system(size: 13, weight: .medium))
                 .padding(.horizontal, AppTheme.Spacing.sm)
@@ -285,21 +276,21 @@ private extension AddCardView {
                 .frame(maxWidth: .infinity)
                 .background(
                     selectedBrand == brand
-                        ? Color(hex: brand.colorHex).opacity(0.15)
-                        : AppTheme.Colors.secondaryBackground
+                    ? Color(hex: brand.colorHex).opacity(0.15)
+                    : AppTheme.Colors.secondaryBackground
                 )
                 .foregroundStyle(
                     selectedBrand == brand
-                        ? Color(hex: brand.colorHex)
-                        : .secondary
+                    ? Color(hex: brand.colorHex)
+                    : .secondary
                 )
                 .cornerRadius(AppTheme.CornerRadius.small)
                 .overlay(
                     RoundedRectangle(cornerRadius: AppTheme.CornerRadius.small)
                         .stroke(
                             selectedBrand == brand
-                                ? Color(hex: brand.colorHex).opacity(0.3)
-                                : Color.clear,
+                            ? Color(hex: brand.colorHex).opacity(0.3)
+                            : Color.clear,
                             lineWidth: 1
                         )
                 )
@@ -312,7 +303,7 @@ private extension AddCardView {
                 .font(.system(size: 14))
                 .foregroundStyle(.blue)
             
-            Text("This is a demo app. No real card data is stored or processed.")
+            Text("This is a demo app. Only card metadata is stored. No full card number or CVV is saved.")
                 .font(AppTheme.Typography.caption)
                 .foregroundStyle(.secondary)
         }
@@ -342,6 +333,7 @@ private extension AddCardView {
 // MARK: - Success View
 
 private extension AddCardView {
+    
     var successView: some View {
         VStack(spacing: AppTheme.Spacing.lg) {
             Spacer()
@@ -363,6 +355,12 @@ private extension AddCardView {
                 .font(AppTheme.Typography.headline)
                 .foregroundStyle(.secondary)
             
+            Text("This demo card was saved to your Firestore account.")
+                .font(AppTheme.Typography.caption)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, AppTheme.Spacing.lg)
+            
             Spacer()
         }
         .frame(maxWidth: .infinity)
@@ -372,22 +370,33 @@ private extension AddCardView {
 // MARK: - Add Card Logic
 
 private extension AddCardView {
+    
     func addCard() async {
         errorMessage = nil
         isLoading = true
         
+        guard let userId = appViewModel.currentUser?.userId else {
+            errorMessage = "User session not found. Please log in again."
+            isLoading = false
+            return
+        }
+        
         let request = AddCardRequest(
             brand: selectedBrand,
             lastFour: lastFour,
-            cardholderName: cardholderName
-                .trimmingCharacters(in: .whitespacesAndNewlines),
+            cardholderName: cardholderName.trimmingCharacters(in: .whitespacesAndNewlines),
             expiryMonth: expiryMonth,
             expiryYear: expiryYear
         )
         
         do {
-            let card = try await appViewModel.paymentService.addCard(request: request)
+            let card = try await firestoreCardService.addCard(
+                userId: userId,
+                request: request
+            )
+            
             onCardAdded?(card)
+            
             appViewModel.analyticsService.track(
                 .cardAdded(brand: card.brand.rawValue)
             )
