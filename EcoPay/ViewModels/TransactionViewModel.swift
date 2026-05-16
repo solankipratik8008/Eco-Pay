@@ -48,6 +48,7 @@ final class TransactionViewModel: ObservableObject {
     
     private let paymentService: PaymentServiceProtocol
     private let analyticsService: AnalyticsServiceProtocol
+    private let firestoreWalletService = FirestoreWalletService()
     private weak var appViewModel: AppViewModel?
     
     // MARK: - Computed Properties
@@ -102,32 +103,30 @@ final class TransactionViewModel: ObservableObject {
     func loadTransactions() async {
         guard !listState.isLoading || isRefreshing else { return }
         
+        guard let userId = appViewModel?.currentUser?.userId else {
+            listState = .error("User session not found. Please log in again.")
+            isRefreshing = false
+            return
+        }
+        
         if !isRefreshing {
             listState = .loading
         }
         
         do {
-            let response = try await paymentService.fetchTransactions(
-                page: 1,
+            let transactions = try await firestoreWalletService.fetchRecentTransactions(
+                for: userId,
                 limit: 50
             )
             
-            allTransactions = response.transactions
-            listState = .loaded(response.transactions)
+            allTransactions = transactions
+            listState = .loaded(transactions)
             
             analyticsService.track(
-                .transactionsViewed(count: response.transactions.count)
+                .transactionsViewed(count: transactions.count)
             )
-        } catch let error as PaymentError {
-            if error.requiresReLogin {
-                if let appViewModel {
-                    await appViewModel.handleAuthError(.sessionExpired)
-                }
-            } else {
-                listState = .error(error.localizedDescription)
-            }
         } catch {
-            listState = .error(error.localizedDescription)
+            listState = .error("Unable to load Firestore transactions: \(error.localizedDescription)")
         }
         
         isRefreshing = false
@@ -145,17 +144,11 @@ final class TransactionViewModel: ObservableObject {
     func loadTransactionDetail(id: String) async {
         isLoadingDetail = true
         
-        do {
-            let detail = try await paymentService.fetchTransaction(id: id)
-            selectedTransaction = detail
-            
-            analyticsService.track(
-                .transactionDetailViewed(id: id)
-            )
-        } catch {
-            // Fall back to the list version if detail fetch fails
-            selectedTransaction = allTransactions.first(where: { $0.id == id })
-        }
+        selectedTransaction = allTransactions.first(where: { $0.id == id })
+        
+        analyticsService.track(
+            .transactionDetailViewed(id: id)
+        )
         
         isLoadingDetail = false
     }
