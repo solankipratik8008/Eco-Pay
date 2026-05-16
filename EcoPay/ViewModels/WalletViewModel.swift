@@ -46,6 +46,7 @@ final class WalletViewModel: ObservableObject {
     
     private let paymentService: PaymentServiceProtocol
     private let analyticsService: AnalyticsServiceProtocol
+    private let firestoreWalletService = FirestoreWalletService()
     private weak var appViewModel: AppViewModel?
     
     // MARK: - Computed Properties
@@ -171,28 +172,20 @@ final class WalletViewModel: ObservableObject {
     
     /// Fetches wallet balance and cards from the API.
     private func loadWallet() async {
+        guard let userId = appViewModel?.currentUser?.userId else {
+            walletState = .error("User session not found. Please log in again.")
+            return
+        }
+        
         do {
-            let wallet = try await paymentService.fetchWallet()
+            let wallet = try await firestoreWalletService.fetchWallet(for: userId)
             walletState = .loaded(wallet)
             
-            // Track analytics
             analyticsService.track(
                 .walletViewed(balance: wallet.balance.asCurrency())
             )
-        } catch let error as PaymentError {
-            if error.requiresReLogin {
-                if let appViewModel {
-                    await appViewModel.handleAuthError(
-                        .sessionExpired
-                    )
-                }
-            } else {
-                walletState = .error(
-                    error.localizedDescription
-                )
-            }
         } catch {
-            walletState = .error(error.localizedDescription)
+            walletState = .error("Unable to load Firestore wallet: \(error.localizedDescription)")
         }
     }
     
@@ -203,30 +196,27 @@ final class WalletViewModel: ObservableObject {
         isLoadingTransactions = true
         transactionError = nil
         
+        guard let userId = appViewModel?.currentUser?.userId else {
+            recentTransactions = []
+            transactionError = "User session not found."
+            isLoadingTransactions = false
+            return
+        }
+        
         do {
-            let response = try await paymentService.fetchTransactions(
-                page: 1,
+            let transactions = try await firestoreWalletService.fetchRecentTransactions(
+                for: userId,
                 limit: 5
             )
-            recentTransactions = response.transactions
+            
+            recentTransactions = transactions
             isLoadingTransactions = false
             
             analyticsService.track(
-                .transactionsViewed(count: response.transactions.count)
+                .transactionsViewed(count: transactions.count)
             )
-        } catch let error as PaymentError {
-            if error.requiresReLogin {
-                if let appViewModel {
-                    await appViewModel.handleAuthError(
-                        .sessionExpired
-                    )
-                }
-            } else {
-                transactionError = error.localizedDescription
-                isLoadingTransactions = false
-            }
         } catch {
-            transactionError = error.localizedDescription
+            transactionError = "Unable to load Firestore transactions: \(error.localizedDescription)"
             isLoadingTransactions = false
         }
     }

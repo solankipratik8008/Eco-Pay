@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7E3C66AC2FB79BF7002FD489 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 7E3C66AB2FB79BF7002FD489 /* FirebaseAuth */; };
+		7E3C66AE2FB79BF7002FD489 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 7E3C66AD2FB79BF7002FD489 /* FirebaseCore */; };
+		7E3C66B02FB79BF7002FD489 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 7E3C66AF2FB79BF7002FD489 /* FirebaseFirestore */; };
 		7E79175B2FABEF52001D81ED /* EcoPayNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 7E79175A2FABEF52001D81ED /* EcoPayNetworking */; };
 		7E79175D2FABEF61001D81ED /* EcoPayAuthKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7E79175C2FABEF61001D81ED /* EcoPayAuthKit */; };
 		7E79175F2FABEF6B001D81ED /* EcoPayPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 7E79175E2FABEF6B001D81ED /* EcoPayPayments */; };
@@ -60,9 +63,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E7917612FABEF78001D81ED /* EcoPayAnalytics in Frameworks */,
+				7E3C66AC2FB79BF7002FD489 /* FirebaseAuth in Frameworks */,
 				7E79175D2FABEF61001D81ED /* EcoPayAuthKit in Frameworks */,
 				7E79175F2FABEF6B001D81ED /* EcoPayPayments in Frameworks */,
+				7E3C66AE2FB79BF7002FD489 /* FirebaseCore in Frameworks */,
 				7E79175B2FABEF52001D81ED /* EcoPayNetworking in Frameworks */,
+				7E3C66B02FB79BF7002FD489 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +141,9 @@
 				7E79175C2FABEF61001D81ED /* EcoPayAuthKit */,
 				7E79175E2FABEF6B001D81ED /* EcoPayPayments */,
 				7E7917602FABEF78001D81ED /* EcoPayAnalytics */,
+				7E3C66AB2FB79BF7002FD489 /* FirebaseAuth */,
+				7E3C66AD2FB79BF7002FD489 /* FirebaseCore */,
+				7E3C66AF2FB79BF7002FD489 /* FirebaseFirestore */,
 			);
 			productName = EcoPay;
 			productReference = 7E7917002FABA5E6001D81ED /* EcoPay.app */;
@@ -223,6 +232,7 @@
 				7E7917332FABACD6001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayAuthKit" */,
 				7E7917342FABB04A001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayPayments" */,
 				7E7917352FABB165001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayAnalytics" */,
+				7E3C66AA2FB79BF7002FD489 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7E7917012FABA5E6001D81ED /* Products */;
@@ -621,7 +631,33 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		7E3C66AA2FB79BF7002FD489 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.13.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		7E3C66AB2FB79BF7002FD489 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E3C66AA2FB79BF7002FD489 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		7E3C66AD2FB79BF7002FD489 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E3C66AA2FB79BF7002FD489 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		7E3C66AF2FB79BF7002FD489 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7E3C66AA2FB79BF7002FD489 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
 		7E79175A2FABEF52001D81ED /* EcoPayNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7E7917322FABA948001D81ED /* XCLocalSwiftPackageReference "Packages/EcoPayNetworking" */;

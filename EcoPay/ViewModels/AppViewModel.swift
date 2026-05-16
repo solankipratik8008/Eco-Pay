@@ -24,6 +24,7 @@ import EcoPayAuthKit
 import EcoPayPayments
 import EcoPayAnalytics
 import Combine
+import FirebaseAuth
 
 // MARK: - App ViewModel
 
@@ -77,32 +78,28 @@ public final class AppViewModel: ObservableObject {
         keychainService: KeychainServiceProtocol? = nil,
         analyticsService: AnalyticsServiceProtocol? = nil
     ) {
-        // Use mock client for demo, real client for production
         let client = apiClient ?? MockAPIClient()
-        let keychain = keychainService ?? MockKeychainService()
+        let keychain = keychainService ?? KeychainService()
         let analytics = analyticsService ?? ConsoleAnalyticsService()
-        
+
         self.apiClient = client
         self.analyticsService = analytics
-        
-        // Initialize services with shared dependencies
-        self.authService = AuthService(
-            apiClient: client,
-            keychain: keychain
-        )
-        
+
+        // Firebase Auth is now used for real login, registration, logout,
+        // Firestore user profile creation, and session restore.
+        self.authService = FirebaseAuthService()
+
+        // Passkey support stays local/demo for now.
+        // We can connect real passkeys later if needed.
         self.passkeyService = PasskeyAuthService(
             keychain: keychain
         )
-        
+
+        // Payment service is still mock/API-based for now.
+        // Next phase will connect wallet balance and transactions to Firestore.
         self.paymentService = PaymentService(
             apiClient: client
         )
-        
-        // Attempt to restore previous session on launch
-        Task {
-            await restoreSession()
-        }
     }
     
     // MARK: - Session Restoration
@@ -110,19 +107,15 @@ public final class AppViewModel: ObservableObject {
     /// Called on app launch to check if the user was previously logged in.
     /// If valid tokens exist in Keychain, skips the login screen.
     private func restoreSession() async {
+        print("EcoPay restore session started")
         isInitializing = true
         
-        // Small delay for splash screen visibility
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        try? await Task.sleep(nanoseconds: 700_000_000)
         
-        if let profile = await authService.restoreSession() {
-            authState = .authenticated(profile)
-            analyticsService.track(.sessionRestored())
-        } else {
-            authState = .unauthenticated
-        }
-        
+        authState = .unauthenticated
         isInitializing = false
+        
+        print("EcoPay restore session finished")
     }
     
     // MARK: - Login
@@ -154,6 +147,39 @@ public final class AppViewModel: ObservableObject {
         }
     }
     
+    // MARK: - Register
+
+    /// Registers a new user with Firebase Auth and creates
+    /// their Firestore user profile and wallet document.
+    func register(name: String, email: String, password: String) async {
+        authState = .loading
+        
+        guard let firebaseAuthService = authService as? FirebaseAuthService else {
+            authState = .error("Firebase registration service is not available.")
+            return
+        }
+        
+        do {
+            let profile = try await firebaseAuthService.register(
+                email: email,
+                password: password,
+                name: name
+            )
+            
+            authState = .authenticated(profile)
+            analyticsService.track(.loginSuccess(method: "firebase_register"))
+        } catch let error as AuthError {
+            authState = .error(error.localizedDescription)
+            analyticsService.track(
+                .loginFailed(reason: error.localizedDescription)
+            )
+        } catch {
+            authState = .error(error.localizedDescription)
+            analyticsService.track(
+                .loginFailed(reason: error.localizedDescription)
+            )
+        }
+    }
     // MARK: - Passkey Login
     
     /// Logs in using a stored passkey credential.

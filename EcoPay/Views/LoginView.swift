@@ -11,6 +11,12 @@
 // The login screen for Eco-Pay. Supports email/password login,
 // passkey login, and demo account autofill. Uses LoginViewModel
 // for state management and input validation.
+//
+//  LoginView.swift
+//  EcoPay
+//
+//  Created by Pratik Solanki on 2026-05-06.
+//
 
 import SwiftUI
 
@@ -35,7 +41,7 @@ struct LoginView: View {
                 // Header
                 headerSection
                 
-                // Login form
+                // Auth form
                 formSection
                 
                 // Action buttons
@@ -50,6 +56,7 @@ struct LoginView: View {
         .dismissKeyboardOnTap()
         .animation(AppTheme.Animation.standard, value: viewModel.errorMessage)
         .animation(AppTheme.Animation.standard, value: viewModel.isLoading)
+        .animation(AppTheme.Animation.standard, value: viewModel.mode)
     }
 }
 
@@ -84,10 +91,16 @@ private extension LoginView {
                 .font(AppTheme.Typography.title)
                 .foregroundStyle(AppTheme.Colors.primaryText)
             
-            // Tagline
-            Text(AppConstants.App.tagline)
+            // Dynamic title
+            Text(viewModel.mode.title)
+                .font(AppTheme.Typography.headline)
+                .foregroundStyle(AppTheme.Colors.primaryText)
+            
+            // Dynamic subtitle
+            Text(viewModel.mode.subtitle)
                 .font(AppTheme.Typography.subheadline)
                 .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
             
             Spacer()
                 .frame(height: AppTheme.Spacing.xl)
@@ -100,6 +113,34 @@ private extension LoginView {
 private extension LoginView {
     var formSection: some View {
         VStack(spacing: AppTheme.Spacing.md) {
+            
+            // Full name field only appears during registration
+            // Full name field only appears during registration
+            if viewModel.isRegisterMode {
+                HStack(spacing: AppTheme.Spacing.sm) {
+                    Image(systemName: "person.fill")
+                        .foregroundStyle(viewModel.errorField == .fullName ? .red : .secondary)
+                        .frame(width: 20)
+                    
+                    TextField("Enter your full name", text: $viewModel.fullName)
+                        .textContentType(.name)
+                        .autocorrectionDisabled()
+                        .textInputAutocapitalization(.words)
+                        .font(AppTheme.Typography.body)
+                }
+                .padding(AppTheme.Spacing.md)
+                .background(AppTheme.Colors.secondaryBackground)
+                .overlay(
+                    RoundedRectangle(cornerRadius: AppTheme.CornerRadius.medium)
+                        .stroke(
+                            viewModel.errorField == .fullName ? Color.red : Color.clear,
+                            lineWidth: 1
+                        )
+                )
+                .cornerRadius(AppTheme.CornerRadius.medium)
+                .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+            
             // Email field
             AppTextField.email(
                 text: $viewModel.email,
@@ -115,6 +156,20 @@ private extension LoginView {
                     viewModel.togglePasswordVisibility()
                 }
             )
+            
+            // Password hint for registration
+            if viewModel.isRegisterMode {
+                HStack(spacing: AppTheme.Spacing.xs) {
+                    Image(systemName: "info.circle")
+                        .font(.system(size: 13))
+                    
+                    Text("Password must be at least 8 characters.")
+                        .font(AppTheme.Typography.caption)
+                }
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .transition(.opacity)
+            }
             
             // Error message
             if let errorMessage = viewModel.errorMessage {
@@ -151,20 +206,38 @@ private extension LoginView {
             Spacer()
                 .frame(height: AppTheme.Spacing.md)
             
-            // Primary login button
+            // Primary auth button
             PrimaryButton(
-                title: viewModel.showSuccess ? "Success!" : "Sign In",
-                icon: viewModel.showSuccess ? "checkmark.circle.fill" : "arrow.right",
+                title: viewModel.showSuccess ? "Success!" : viewModel.mode.primaryButtonTitle,
+                icon: viewModel.showSuccess ? "checkmark.circle.fill" : primaryButtonIcon,
                 isLoading: viewModel.isLoading,
-                isEnabled: viewModel.isLoginEnabled
+                isEnabled: viewModel.isPrimaryButtonEnabled
             ) {
                 Task {
-                    await viewModel.login()
+                    await viewModel.submit()
                 }
             }
             
-            // Passkey login button (only shown if passkey is registered)
-            if viewModel.isPasskeyAvailable {
+            // Switch login/register mode
+            HStack(spacing: 4) {
+                Text(viewModel.mode.switchPrompt)
+                    .font(AppTheme.Typography.subheadline)
+                    .foregroundStyle(.secondary)
+                
+                Button {
+                    viewModel.toggleMode()
+                } label: {
+                    Text(viewModel.mode.switchButtonTitle)
+                        .font(AppTheme.Typography.subheadline)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.blue)
+                }
+                .disabled(viewModel.isLoading)
+            }
+            .padding(.top, AppTheme.Spacing.xs)
+            
+            // Passkey login button only shown in login mode
+            if viewModel.isLoginMode && viewModel.isPasskeyAvailable {
                 PrimaryButton(
                     title: "Sign In with Passkey",
                     icon: AppConstants.Icons.passkey,
@@ -176,26 +249,39 @@ private extension LoginView {
                         await viewModel.loginWithPasskey()
                     }
                 }
+                .transition(.opacity)
             }
             
             // Divider
-            dividerRow
-            
-            // Demo account button
-            Button(action: {
-                viewModel.fillDemoCredentials()
-            }) {
-                HStack(spacing: AppTheme.Spacing.xs) {
-                    Image(systemName: "person.fill.questionmark")
-                        .font(.system(size: 14))
-                    
-                    Text("Use Demo Account")
-                        .font(AppTheme.Typography.subheadline)
+            if viewModel.isLoginMode {
+                dividerRow
+                
+                // Demo account button only for login mode
+                Button(action: {
+                    viewModel.fillDemoCredentials()
+                }) {
+                    HStack(spacing: AppTheme.Spacing.xs) {
+                        Image(systemName: "person.fill.questionmark")
+                            .font(.system(size: 14))
+                        
+                        Text("Use Demo Account")
+                            .font(AppTheme.Typography.subheadline)
+                    }
+                    .foregroundStyle(.blue)
                 }
-                .foregroundStyle(.blue)
+                .disabled(viewModel.isLoading)
+                .padding(.top, AppTheme.Spacing.xs)
+                .transition(.opacity)
             }
-            .disabled(viewModel.isLoading)
-            .padding(.top, AppTheme.Spacing.xs)
+        }
+    }
+    
+    var primaryButtonIcon: String {
+        switch viewModel.mode {
+        case .login:
+            return "arrow.right"
+        case .register:
+            return "person.badge.plus"
         }
     }
     
@@ -226,25 +312,46 @@ private extension LoginView {
             Spacer()
                 .frame(height: AppTheme.Spacing.xl)
             
-            // Demo credentials hint
-            VStack(spacing: AppTheme.Spacing.xxs) {
-                Text("Demo Credentials")
-                    .font(AppTheme.Typography.caption)
-                    .foregroundStyle(.secondary)
-                    .fontWeight(.semibold)
-                
-                Text("\(AppConstants.MockUser.email)")
-                    .font(AppTheme.Typography.caption)
-                    .foregroundStyle(.secondary)
-                
-                Text("\(AppConstants.MockUser.password)")
-                    .font(AppTheme.Typography.caption)
-                    .foregroundStyle(.secondary)
+            if viewModel.isLoginMode {
+                // Demo credentials hint
+                VStack(spacing: AppTheme.Spacing.xxs) {
+                    Text("Demo Credentials")
+                        .font(AppTheme.Typography.caption)
+                        .foregroundStyle(.secondary)
+                        .fontWeight(.semibold)
+                    
+                    Text("\(AppConstants.MockUser.email)")
+                        .font(AppTheme.Typography.caption)
+                        .foregroundStyle(.secondary)
+                    
+                    Text("\(AppConstants.MockUser.password)")
+                        .font(AppTheme.Typography.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(AppTheme.Spacing.md)
+                .frame(maxWidth: .infinity)
+                .background(AppTheme.Colors.secondaryBackground)
+                .cornerRadius(AppTheme.CornerRadius.medium)
+                .transition(.opacity)
+            } else {
+                // Register mode info
+                VStack(spacing: AppTheme.Spacing.xxs) {
+                    Text("New Wallet Account")
+                        .font(AppTheme.Typography.caption)
+                        .foregroundStyle(.secondary)
+                        .fontWeight(.semibold)
+                    
+                    Text("A Firebase account, user profile, and starter wallet balance will be created.")
+                        .font(AppTheme.Typography.caption)
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                }
+                .padding(AppTheme.Spacing.md)
+                .frame(maxWidth: .infinity)
+                .background(AppTheme.Colors.secondaryBackground)
+                .cornerRadius(AppTheme.CornerRadius.medium)
+                .transition(.opacity)
             }
-            .padding(AppTheme.Spacing.md)
-            .frame(maxWidth: .infinity)
-            .background(AppTheme.Colors.secondaryBackground)
-            .cornerRadius(AppTheme.CornerRadius.medium)
             
             // App version
             Text("v\(AppConstants.App.version)")
@@ -261,6 +368,8 @@ private extension LoginView {
 // MARK: - Preview
 
 #Preview("Login Screen") {
-    LoginView(appViewModel: AppViewModel())
-        .environmentObject(AppViewModel())
+    let appViewModel = AppViewModel()
+    
+    LoginView(appViewModel: appViewModel)
+        .environmentObject(appViewModel)
 }
